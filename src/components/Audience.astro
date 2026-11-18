@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro'
+import SectionHeader from './SectionHeader.astro'
+import { audiences } from '../data/content'
+import { whatsappLink } from '../data/site'
+---
+
+<section id="para-quem" class="py-20 md:py-28">
+  <div class="wrap">
+    <SectionHeader
+      eyebrow="Para quem"
+      title="Para empresas que vendem produtos e serviços técnicos para outras empresas"
+    />
+
+    <ul class="mt-14 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        audiences.map((item) => (
+          <li class="border-t-2 border-brand pt-6">
+            <Icon name={item.icon} class="size-8 text-brand" />
+            <h3 class="mt-5 text-lg font-bold">{item.title}</h3>
+            <p class="mt-2 leading-relaxed text-ink-soft">{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div
+      class="mt-16 flex flex-col gap-6 rounded-2xl bg-navy-950 p-8 text-white md:flex-row md:items-center md:justify-between md:p-10"
+    >
+      <p class="max-w-2xl text-xl leading-snug font-semibold md:text-2xl">
+        Se a sua venda passa por cotação, especificação técnica ou aprovação de mais de uma pessoa,
+        a <span class="neon-text">B2</span> foi feita para você.
+      </p>
+      <a
+        href={whatsappLink()}
+        target="_blank"
+        rel="noopener"
+        class="btn btn-primary shrink-0"
+        data-cta="para-quem-whatsapp"
+      >
+        Conversar com a B2
+        <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro'
+import { whatsappLink } from '../data/site'
+---
+
+<a
+  href={whatsappLink()}
+  target="_blank"
+  rel="noopener"
+  aria-label="Conversar pelo WhatsApp"
+  class="fixed right-5 bottom-5 z-50 flex size-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-[0_10px_30px_-8px_rgb(31_168_85/0.75)] transition-transform hover:scale-105"
+  data-cta="whatsapp-flutuante"
+>
+  <Icon name="message" class="size-7" strokeWidth={2} />
+</a>

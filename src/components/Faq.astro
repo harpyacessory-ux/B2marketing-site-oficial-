@@ -1,0 +1,32 @@
+---
+import Icon from './Icon.astro'
+import SectionHeader from './SectionHeader.astro'
+import { faq } from '../data/content'
+---
+
+<section id="duvidas" class="bg-surface py-20 md:py-28">
+  <div class="wrap grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+    <SectionHeader
+      eyebrow="Dúvidas frequentes"
+      title="O que as empresas perguntam antes de começar"
+    />
+
+    <div class="divide-y divide-line border-y border-line">
+      {
+        faq.map((item, i) => (
+          <details class="group py-2" open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 text-lg font-semibold [&::-webkit-details-marker]:hidden">
+              {item.q}
+              <Icon
+                name="chevron"
+                class="size-5 shrink-0 text-brand transition-transform group-open:rotate-180"
+                strokeWidth={2.25}
+              />
+            </summary>
+            <p class="pb-5 leading-relaxed text-ink-soft">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

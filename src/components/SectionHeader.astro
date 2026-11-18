@@ -1,0 +1,30 @@
+---
+interface Props {
+  eyebrow: string
+  title: string
+  lead?: string
+  dark?: boolean
+  center?: boolean
+}
+
+const { eyebrow, title, lead, dark = false, center = false } = Astro.props
+---
+
+<header class:list={['max-w-3xl', center && 'mx-auto text-center', dark && 'on-dark']}>
+  <p class="eyebrow">{eyebrow}</p>
+  <h2
+    class:list={[
+      'mt-4 text-3xl leading-tight font-bold md:text-[2.6rem]',
+      dark ? 'text-white' : 'text-ink',
+    ]}
+  >
+    {title}
+  </h2>
+  {
+    lead && (
+      <p class:list={['mt-5 text-lg leading-relaxed', dark ? 'text-mist' : 'text-ink-soft']}>
+        {lead}
+      </p>
+    )
+  }
+</header>

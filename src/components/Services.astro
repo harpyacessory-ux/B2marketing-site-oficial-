@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro'
+import SectionHeader from './SectionHeader.astro'
+import { services } from '../data/content'
+---
+
+<section id="servicos" class="bg-surface py-20 md:py-28">
+  <div class="wrap">
+    <SectionHeader
+      eyebrow="Serviços"
+      title="Um time completo de marketing especializado no mercado industrial"
+      lead="Cada canal tem uma função na jornada de compra. Planejamos todos juntos, com o mesmo objetivo: oportunidades reais para o seu comercial."
+    />
+
+    <ul class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        services.map((service) => (
+          <li class="group flex flex-col rounded-2xl border border-line bg-white p-7 transition-[border-color,box-shadow] hover:border-brand/40 hover:shadow-[0_18px_40px_-24px_rgb(10_108_255/0.45)]">
+            <span class="flex size-12 items-center justify-center rounded-xl bg-navy-950 text-neon shadow-[0_0_18px_-6px_rgb(46_155_255/0.9)]">
+              <Icon name={service.icon} />
+            </span>
+            <h3 class="mt-6 text-xl font-bold">{service.title}</h3>
+            <p class="mt-3 leading-relaxed text-ink-soft">{service.text}</p>
+            <ul class="mt-6 space-y-2 border-t border-line pt-5 text-[0.95rem]">
+              {service.items.map((item) => (
+                <li class="flex items-start gap-2.5">
+                  <Icon name="check" class="mt-0.5 size-4.5 shrink-0 text-brand" strokeWidth={2.5} />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

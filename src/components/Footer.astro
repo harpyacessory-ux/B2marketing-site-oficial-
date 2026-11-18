@@ -1,0 +1,82 @@
+---
+import Icon from './Icon.astro'
+import { nav, site, whatsappLink } from '../data/site'
+
+const year = new Date().getFullYear()
+---
+
+<footer class="border-t border-white/8 bg-navy-950 text-mist">
+  <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <div class="flex items-center gap-3">
+        <img src="/logo-b2.png" alt="" width="48" height="47" class="size-12 rounded-lg" />
+        <p class="leading-tight text-white">
+          <span class="block text-lg font-bold">{site.name}</span>
+        </p>
+      </div>
+      <p class="mt-5 max-w-sm leading-relaxed">
+        Marketing para indústrias, distribuidores e empresas B2B que precisam gerar oportunidades
+        comerciais.
+      </p>
+      <div class="mt-6 flex gap-3">
+        <a
+          href={site.instagram}
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram da B2"
+          class="flex size-10 items-center justify-center rounded-lg border border-white/12 text-white/80 hover:border-neon hover:text-neon"
+        >
+          <Icon name="instagram" class="size-5" />
+        </a>
+        <a
+          href={site.linkedin}
+          target="_blank"
+          rel="noopener"
+          aria-label="LinkedIn da B2"
+          class="flex size-10 items-center justify-center rounded-lg border border-white/12 text-white/80 hover:border-neon hover:text-neon"
+        >
+          <Icon name="linkedin" class="size-5" />
+        </a>
+      </div>
+    </div>
+
+    <nav aria-label="Rodapé">
+      <p class="text-sm font-semibold tracking-[0.14em] text-white uppercase">Navegação</p>
+      <ul class="mt-4 space-y-2.5">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} class="hover:text-white">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li><a href="#contato" class="hover:text-white">Contato</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="text-sm font-semibold tracking-[0.14em] text-white uppercase">Contato</p>
+      <ul class="mt-4 space-y-2.5">
+        <li>
+          <a href={whatsappLink()} target="_blank" rel="noopener" class="hover:text-white"
+            >WhatsApp {site.whatsapp.display}</a
+          >
+        </li>
+        <li><a href={`tel:${site.phone.tel}`} class="hover:text-white">{site.phone.display}</a></li>
+        <li>
+          <a
+            href={`mailto:${site.email}`}
+            class="hover:text-white"
+            set:html={site.email.replace('@', '@<wbr>')}
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/8">
+    <p class="wrap py-6 text-sm">© {year} {site.name}. Todos os direitos reservados.</p>
+  </div>
+</footer>

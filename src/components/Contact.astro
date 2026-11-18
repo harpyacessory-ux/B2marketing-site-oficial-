@@ -1,0 +1,165 @@
+---
+import Icon from './Icon.astro'
+import SectionHeader from './SectionHeader.astro'
+import { interests } from '../data/content'
+import { site, whatsappLink } from '../data/site'
+
+const direct = [
+  {
+    icon: 'message',
+    label: 'WhatsApp',
+    value: site.whatsapp.display,
+    href: whatsappLink(),
+    external: true,
+    cta: 'contato-whatsapp',
+  },
+  {
+    icon: 'phone',
+    label: 'Telefone',
+    value: site.phone.display,
+    href: `tel:${site.phone.tel}`,
+    external: false,
+    cta: 'contato-telefone',
+  },
+  {
+    icon: 'mail',
+    label: 'E-mail',
+    value: site.email,
+    href: `mailto:${site.email}`,
+    external: false,
+    cta: 'contato-email',
+  },
+] as const
+---
+
+<section id="contato" class="tech-bg py-20 text-white md:py-28">
+  <div class="wrap grid gap-14 lg:grid-cols-2 lg:gap-20">
+    <div>
+      <SectionHeader
+        dark
+        eyebrow="Contato"
+        title="Vamos gerar demanda para a sua empresa?"
+        lead="Conte o que a sua empresa vende e para quem. Um especialista da B2 responde pelo WhatsApp."
+      />
+
+      <ul class="mt-10 space-y-4">
+        {
+          direct.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noopener' : undefined}
+                class="group flex items-center gap-4"
+                data-cta={item.cta}
+              >
+                <span class="flex size-12 shrink-0 items-center justify-center rounded-xl border border-neon/30 bg-navy-900 text-neon">
+                  <Icon name={item.icon} class="size-5" />
+                </span>
+                <span>
+                  <span class="block text-sm text-mist">{item.label}</span>
+                  <span
+                    class="block font-semibold text-white group-hover:text-neon"
+                    set:html={item.value.replace('@', '@<wbr>')}
+                  />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <form
+      class="rounded-2xl bg-white p-6 text-ink shadow-[0_30px_80px_-30px_rgb(10_108_255/0.6)] sm:p-9"
+      data-lead-form
+      novalidate
+    >
+      <h3 class="text-2xl font-bold">Peça um diagnóstico</h3>
+      <p class="mt-2 text-ink-soft">Leva menos de um minuto.</p>
+
+      <div class="mt-7 grid gap-5 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-semibold">Seu nome</span>
+          <input class="field" name="nome" autocomplete="name" required />
+        </label>
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-semibold">Empresa</span>
+          <input class="field" name="empresa" autocomplete="organization" required />
+        </label>
+        <label class="block sm:col-span-2">
+          <span class="mb-1.5 block text-sm font-semibold">O que a empresa vende?</span>
+          <input
+            class="field"
+            name="produto"
+            placeholder="Ex.: compressores, válvulas, manutenção industrial"
+            required
+          />
+        </label>
+        <label class="block sm:col-span-2">
+          <span class="mb-1.5 block text-sm font-semibold">Interesse principal</span>
+          <select class="field" name="interesse">
+            {interests.map((option) => <option>{option}</option>)}
+          </select>
+        </label>
+        <label class="block sm:col-span-2">
+          <span class="mb-1.5 block text-sm font-semibold">
+            Mensagem <span class="font-normal text-ink-soft">(opcional)</span>
+          </span>
+          <textarea
+            class="field min-h-28 resize-y"
+            name="mensagem"
+            rows="3"
+            placeholder="Conte um pouco sobre o momento da empresa"></textarea>
+        </label>
+      </div>
+
+      <p class="mt-4 hidden text-sm font-medium text-red-600" role="alert" data-form-error>
+        Preencha nome, empresa e o que a empresa vende.
+      </p>
+
+      <button type="submit" class="btn btn-primary mt-6 w-full" data-cta="form-whatsapp">
+        Enviar pelo WhatsApp
+        <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
+      </button>
+      <p class="mt-4 text-center text-xs leading-relaxed text-ink-soft">
+        Ao enviar, abrimos uma conversa no WhatsApp com a sua mensagem. Nada fica salvo no site.
+      </p>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { whatsappLink } from '../data/site'
+
+  const form = document.querySelector<HTMLFormElement>('[data-lead-form]')
+  const error = document.querySelector<HTMLElement>('[data-form-error]')
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault()
+    const data = new FormData(form)
+    const value = (key: string) => String(data.get(key) ?? '').trim()
+
+    if (!value('nome') || !value('empresa') || !value('produto')) {
+      error?.classList.remove('hidden')
+      form.querySelector<HTMLInputElement>('input:invalid')?.focus()
+      return
+    }
+    error?.classList.add('hidden')
+
+    const lines = [
+      'Olá! Vim pelo site da B2 e quero um diagnóstico.',
+      '',
+      `Nome: ${value('nome')}`,
+      `Empresa: ${value('empresa')}`,
+      `O que vendemos: ${value('produto')}`,
+      `Interesse: ${value('interesse')}`,
+    ]
+    if (value('mensagem')) lines.push(`Mensagem: ${value('mensagem')}`)
+
+    const w = window as typeof window & { dataLayer?: object[] }
+    w.dataLayer?.push({ event: 'lead_whatsapp', interesse: value('interesse') })
+
+    window.open(whatsappLink(lines.join('\n')), '_blank', 'noopener')
+  })
+</script>

@@ -1,0 +1,198 @@
+@import 'tailwindcss';
+
+/* Identidade B2 Marketing Industrial: azul-marinho com destaque azul neon. */
+@theme {
+  --color-navy-950: #050d1a;
+  --color-navy-900: #0b1729;
+  --color-navy-800: #10213a;
+  --color-navy-700: #1c2e48;
+  --color-brand: #0a6cff;
+  --color-brand-dark: #0057d9;
+  --color-neon: #2e9bff;
+  --color-glow: #4fb6ff;
+  --color-ink: #0b1729;
+  --color-ink-soft: #44546a;
+  --color-mist: #8fa3bd;
+  --color-surface: #f3f6fa;
+  --color-line: #e0e7f0;
+  --color-whatsapp: #1fa855;
+
+  --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+
+  --container-page: 1240px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-stretch: 112%;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-neon);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+
+    @media (width >= 48rem) {
+      padding-inline: 2rem;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 0.6rem;
+    font-weight: 650;
+    font-size: 0.975rem;
+    line-height: 1.2;
+    transition:
+      background-color 0.15s,
+      border-color 0.15s,
+      box-shadow 0.15s,
+      transform 0.15s;
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  .btn-primary {
+    background: var(--color-brand);
+    color: #fff;
+    box-shadow: 0 8px 24px -10px rgb(10 108 255 / 0.7);
+
+    &:hover {
+      background: var(--color-brand-dark);
+    }
+  }
+
+  .btn-ghost {
+    border: 1px solid rgb(143 163 189 / 0.4);
+    color: #fff;
+
+    &:hover {
+      border-color: var(--color-neon);
+      background: rgb(46 155 255 / 0.08);
+    }
+  }
+
+  .btn-outline {
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+    background: #fff;
+
+    &:hover {
+      border-color: var(--color-brand);
+      color: var(--color-brand);
+    }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+
+    &::before {
+      content: '';
+      width: 1.5rem;
+      height: 2px;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+    }
+  }
+
+  .on-dark .eyebrow {
+    color: var(--color-neon);
+  }
+
+  /* Fundo escuro do hero e das seções navy: brilho azul e grade técnica. */
+  .tech-bg {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--color-navy-950);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(to right, rgb(46 155 255 / 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(46 155 255 / 0.07) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 70% at 70% 30%, #000 30%, transparent 75%);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(50% 55% at 78% 28%, rgb(10 108 255 / 0.28), transparent 70%);
+    }
+  }
+
+  .neon-text {
+    color: var(--color-neon);
+    text-shadow: 0 0 24px rgb(46 155 255 / 0.45);
+  }
+
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.55rem;
+    background: #fff;
+    color: var(--color-ink);
+    font-size: 1rem;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-brand);
+      box-shadow: 0 0 0 3px rgb(10 108 255 / 0.18);
+    }
+
+    &::placeholder {
+      color: #8a97a8;
+    }
+  }
+}

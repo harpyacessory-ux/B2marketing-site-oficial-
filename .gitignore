@@ -1,0 +1,16 @@
+# build
+dist/
+.astro/
+
+# dependências
+node_modules/
+
+# ambiente
+.env
+.env.*
+.vercel/
+
+# sistema
+.DS_Store
+Thumbs.db
+npm-debug.log*
