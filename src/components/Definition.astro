@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets'
+import Icon from './Icon.astro'
+import photo from '../assets/especialista.jpg'
+import { definition } from '../data/content'
+---
+
+<section class="py-20 md:py-28">
+  <div class="wrap grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+    <div>
+      <p class="eyebrow">Marketing industrial</p>
+      <h2 class="mt-4 text-3xl leading-tight font-bold md:text-[2.6rem]">{definition.title}</h2>
+      {
+        definition.paragraphs.map((text) => (
+          <p class="mt-5 text-lg leading-relaxed text-ink-soft">{text}</p>
+        ))
+      }
+
+      <ol class="mt-10 grid gap-4 sm:grid-cols-3">
+        {
+          definition.pillars.map((pillar, i) => (
+            <li class="rounded-2xl border border-line bg-surface p-5">
+              <span class="text-sm font-bold tracking-widest text-brand">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="mt-2 text-xl font-bold">{pillar.title}</h3>
+              <p class="mt-2 text-[0.95rem] leading-relaxed text-ink-soft">{pillar.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <a href="#contato" class="btn btn-primary mt-10" data-cta="definicao-diagnostico">
+        Agendar diagnóstico
+        <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
+      </a>
+    </div>
+
+    <div class="relative">
+      <div
+        class="absolute -inset-3 -z-10 rounded-[1.75rem] bg-gradient-to-br from-brand/25 to-transparent blur-xl"
+        aria-hidden="true"
+      >
+      </div>
+      <Image
+        src={photo}
+        alt="Especialista em marketing industrial com capacete de segurança em uma fábrica"
+        widths={[480, 720, 1000]}
+        sizes="(min-width: 1024px) 40vw, 100vw"
+        class="aspect-[4/5] w-full rounded-2xl object-cover"
+      />
+    </div>
+  </div>
+</section>

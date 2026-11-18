@@ -1,0 +1,41 @@
+---
+import Icon from './Icon.astro'
+import SectionHeader from './SectionHeader.astro'
+import { difference } from '../data/content'
+---
+
+<section class="bg-surface py-20 md:py-28">
+  <div class="wrap">
+    <SectionHeader eyebrow="Especialização" title={difference.title} lead={difference.lead} />
+
+    <div class="mt-12 grid gap-5 md:grid-cols-2">
+      {
+        difference.cards.map((card) => (
+          <div
+            class:list={[
+              'rounded-2xl p-8',
+              card.highlight
+                ? 'bg-navy-950 text-white shadow-[0_24px_60px_-30px_rgb(10_108_255/0.8)]'
+                : 'border border-line bg-white',
+            ]}
+          >
+            <h3 class:list={['text-xl font-bold', card.highlight && 'text-neon']}>{card.title}</h3>
+            <p
+              class:list={[
+                'mt-4 text-lg leading-relaxed',
+                card.highlight ? 'text-white/85' : 'text-ink-soft',
+              ]}
+            >
+              {card.text}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    <a href="#contato" class="btn btn-primary mt-10" data-cta="diferenca-contato">
+      Conversar com a B2
+      <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
+    </a>
+  </div>
+</section>

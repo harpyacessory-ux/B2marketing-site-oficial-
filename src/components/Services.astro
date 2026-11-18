@@ -1,37 +1,68 @@
 ---
+import { Image } from 'astro:assets'
 import Icon from './Icon.astro'
-import SectionHeader from './SectionHeader.astro'
+import ecosystem from '../assets/ecossistema.png'
 import { services } from '../data/content'
 ---
 
-<section id="servicos" class="bg-surface py-20 md:py-28">
+<section id="servicos" class="py-20 md:py-28">
   <div class="wrap">
-    <SectionHeader
-      eyebrow="Serviços"
-      title="Um time completo de marketing especializado no mercado industrial"
-      lead="Cada canal tem uma função na jornada de compra. Planejamos todos juntos, com o mesmo objetivo: oportunidades reais para o seu comercial."
-    />
+    <div class="grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+      <header>
+        <p class="eyebrow">Soluções</p>
+        <h2 class="mt-4 text-3xl leading-tight font-bold md:text-[2.6rem]">
+          Serviços de marketing industrial
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-ink-soft">
+          Oferecemos um ecossistema de ações digitais gerido por um time especializado da B2, com
+          foco no planejamento estratégico definido junto com você.
+        </p>
+      </header>
+      <Image
+        src={ecosystem}
+        alt="Ecossistema de canais da B2: LinkedIn, Google Ads, Instagram, landing pages, e-mail e CRM levando leads ao funil de vendas"
+        widths={[640, 1000, 1400]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        class="w-full rounded-2xl bg-navy-950"
+      />
+    </div>
 
-    <ul class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
         services.map((service) => (
-          <li class="group flex flex-col rounded-2xl border border-line bg-white p-7 transition-[border-color,box-shadow] hover:border-brand/40 hover:shadow-[0_18px_40px_-24px_rgb(10_108_255/0.45)]">
-            <span class="flex size-12 items-center justify-center rounded-xl bg-navy-950 text-neon shadow-[0_0_18px_-6px_rgb(46_155_255/0.9)]">
-              <Icon name={service.icon} />
+          <li class="flex flex-col rounded-2xl border border-line bg-white p-6 transition-[border-color,box-shadow] hover:border-brand/40 hover:shadow-[0_18px_40px_-24px_rgb(10_108_255/0.45)]">
+            <span class="flex size-11 items-center justify-center rounded-xl bg-navy-950 text-neon shadow-[0_0_18px_-6px_rgb(46_155_255/0.9)]">
+              <Icon name={service.icon} class="size-5.5" />
             </span>
-            <h3 class="mt-6 text-xl font-bold">{service.title}</h3>
-            <p class="mt-3 leading-relaxed text-ink-soft">{service.text}</p>
-            <ul class="mt-6 space-y-2 border-t border-line pt-5 text-[0.95rem]">
-              {service.items.map((item) => (
-                <li class="flex items-start gap-2.5">
-                  <Icon name="check" class="mt-0.5 size-4.5 shrink-0 text-brand" strokeWidth={2.5} />
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <h3 class="mt-5 text-lg leading-snug font-bold">{service.title}</h3>
+            <p class="mt-2.5 text-[0.95rem] leading-relaxed text-ink-soft">{service.text}</p>
+            <div class="mt-auto pt-5">
+              <dl class="space-y-3 border-t border-line pt-4 text-sm">
+                <div>
+                  <dt class="font-bold tracking-wider text-brand uppercase">Escopo</dt>
+                  <dd class="mt-1 leading-relaxed">{service.scope}</dd>
+                </div>
+                <div>
+                  <dt class="font-bold tracking-wider text-brand uppercase">Objetivo</dt>
+                  <dd class="mt-1 leading-relaxed font-semibold">{service.goal}</dd>
+                </div>
+              </dl>
+            </div>
           </li>
         ))
       }
     </ul>
+
+    <div
+      class="mt-10 flex flex-col gap-5 rounded-2xl bg-surface p-7 md:flex-row md:items-center md:justify-between"
+    >
+      <p class="text-lg font-semibold">
+        Todo escopo é montado a partir do diagnóstico da sua empresa.
+      </p>
+      <a href="#contato" class="btn btn-primary shrink-0" data-cta="servicos-diagnostico">
+        Conversar com a B2
+        <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
+      </a>
+    </div>
   </div>
 </section>

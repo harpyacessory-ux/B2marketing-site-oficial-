@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets'
+import Icon from './Icon.astro'
+import photo from '../assets/reuniao.jpg'
+import { segments } from '../data/content'
+---
+
+<section id="segmentos" class="bg-surface py-20 md:py-28">
+  <div class="wrap">
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <p class="eyebrow">Segmentos</p>
+        <h2 class="mt-4 text-3xl leading-tight font-bold md:text-[2.6rem]">{segments.title}</h2>
+        <p class="mt-5 text-lg leading-relaxed text-ink-soft">{segments.lead}</p>
+      </div>
+      <Image
+        src={photo}
+        alt="Reunião estratégica de uma campanha de equipamentos industriais"
+        widths={[640, 960, 1280]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        class="aspect-video w-full rounded-2xl object-cover"
+      />
+    </div>
+
+    <div class="mt-14 grid gap-5 md:grid-cols-2">
+      {
+        segments.groups.map((group) => (
+          <div class="rounded-2xl border border-line bg-white p-7">
+            <h3 class="text-lg font-bold">
+              {group.title}
+              <span class="ml-2 text-sm font-semibold text-ink-soft">{group.items.length}</span>
+            </h3>
+            <ul class="mt-5 flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <li class="rounded-full border border-line bg-surface px-3.5 py-1.5 text-[0.95rem] font-medium">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+      <a href="#contato" class="btn btn-primary" data-cta="segmentos-contato">
+        Entre em contato agora
+        <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
+      </a>
+      <p class="text-ink-soft">Não encontrou o seu segmento? Atendemos todos os setores industriais.</p>
+    </div>
+  </div>
+</section>

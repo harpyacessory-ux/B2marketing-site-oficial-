@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro'
+import SectionHeader from './SectionHeader.astro'
+import { problems } from '../data/content'
+---
+
+<section class="tech-bg py-20 text-white md:py-28">
+  <div class="wrap">
+    <SectionHeader dark eyebrow={problems.eyebrow} title={problems.title} />
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+      <ul class="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10">
+        {
+          problems.items.map((item) => (
+            <li class="flex gap-4 bg-navy-900 p-6">
+              <Icon name="xcircle" class="mt-0.5 size-6 shrink-0 text-[#ff6b6b]" />
+              <div>
+                <h3 class="text-lg font-bold">{item.title}</h3>
+                <p class="mt-1.5 leading-relaxed text-mist">{item.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div
+        class="flex flex-col justify-between rounded-2xl border border-neon/50 bg-navy-800/80 p-8 shadow-[0_0_60px_-20px_rgb(46_155_255/0.7)]"
+      >
+        <div>
+          <p class="text-xs font-bold tracking-[0.16em] text-neon uppercase">{problems.label}</p>
+          <p class="mt-5 text-2xl leading-snug font-semibold">{problems.closing}</p>
+          <ul class="mt-8 space-y-3 text-white/85">
+            {
+              problems.specialist.map((item) => (
+                <li class="flex items-center gap-2.5">
+                  <Icon name="check" class="size-5 text-neon" strokeWidth={2.5} />
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <a href="#contato" class="btn btn-primary mt-10" data-cta="problemas-diagnostico">
+          Conversar com a B2 sobre metas
+          <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

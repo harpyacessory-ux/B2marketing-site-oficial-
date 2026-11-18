@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets'
+import { clients } from '../data/clients'
+import { purpose } from '../data/content'
+---
+
+<section id="clientes" class="py-20 md:py-28">
+  <div class="wrap">
+    <header class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow">Propósito</p>
+      <h2 class="mt-4 text-3xl leading-tight font-bold md:text-[2.6rem]">{purpose.title}</h2>
+      <p class="mt-5 text-lg leading-relaxed text-ink-soft">{purpose.text}</p>
+    </header>
+
+    <h3 class="mt-16 text-center text-sm font-bold tracking-[0.16em] text-ink-soft uppercase">
+      {purpose.clientsTitle}
+    </h3>
+    <ul class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      {
+        clients.map((client) => (
+          <li
+            class:list={[
+              'flex h-24 items-center justify-center rounded-xl border p-4',
+              client.dark ? 'border-navy-950 bg-navy-950' : 'border-line bg-white',
+            ]}
+          >
+            <Image
+              src={client.logo}
+              alt={client.name}
+              width={200}
+              densities={[1, 2]}
+              class="max-h-14 w-auto max-w-full object-contain"
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

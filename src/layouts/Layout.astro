@@ -11,18 +11,29 @@ interface Props {
 const { title = site.title, description = site.description } = Astro.props
 const canonical = new URL(Astro.url.pathname, site.url).href
 const logo = new URL('/logo-b2.png', site.url).href
+const ogImage = new URL('/og-image.jpg', site.url).href
+const address = {
+  '@type': 'PostalAddress',
+  streetAddress: site.address.street,
+  addressLocality: site.address.city,
+  addressRegion: site.address.state,
+  addressCountry: 'BR',
+}
 
 const structuredData = [
   {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
+    '@id': `${site.url}/#organization`,
     name: site.name,
+    legalName: site.legalName,
     url: site.url,
     logo,
-    image: logo,
+    image: ogImage,
     description: site.description,
     email: site.email,
-    telephone: site.phone.tel,
+    telephone: `+${site.whatsapp.number}`,
+    address,
     areaServed: { '@type': 'Country', name: 'Brasil' },
     sameAs: [site.instagram, site.linkedin],
   },
@@ -36,6 +47,9 @@ const structuredData = [
     })),
   },
 ]
+
+// O GTM só entra no build de produção, para o `npm run dev` não sujar os dados.
+const gtm = import.meta.env.PROD ? site.gtm : ''
 ---
 
 <!doctype html>
@@ -43,11 +57,26 @@ const structuredData = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {
+      gtm && (
+        <script is:inline define:vars={{ gtm }}>
+          ;(function (w, d, s, l, i) {
+            w[l] = w[l] || []
+            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+            var f = d.getElementsByTagName(s)[0],
+              j = d.createElement(s)
+            j.async = true
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i
+            f.parentNode.insertBefore(j, f)
+          })(window, document, 'script', 'dataLayer', gtm)
+        </script>
+      )
+    }
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/logo-b2.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#050d1a" />
 
     <meta property="og:type" content="website" />
@@ -56,8 +85,10 @@ const structuredData = [
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={logo} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -69,6 +100,19 @@ const structuredData = [
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body class="bg-white font-sans text-ink antialiased">
+    {
+      gtm && (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtm}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+            title="Google Tag Manager"
+          />
+        </noscript>
+      )
+    }
     <slot />
   </body>
 </html>

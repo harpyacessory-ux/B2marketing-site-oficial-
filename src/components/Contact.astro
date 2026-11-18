@@ -1,24 +1,23 @@
 ---
+import { Image } from 'astro:assets'
 import Icon from './Icon.astro'
-import SectionHeader from './SectionHeader.astro'
-import { interests } from '../data/content'
+import team from '../assets/time.png'
+import { contact } from '../data/content'
 import { site, whatsappLink } from '../data/site'
 
-const direct = [
+const channels = [
   {
     icon: 'message',
     label: 'WhatsApp',
     value: site.whatsapp.display,
     href: whatsappLink(),
-    external: true,
     cta: 'contato-whatsapp',
   },
   {
     icon: 'phone',
-    label: 'Telefone',
+    label: 'Telefone fixo',
     value: site.phone.display,
     href: `tel:${site.phone.tel}`,
-    external: false,
     cta: 'contato-telefone',
   },
   {
@@ -26,34 +25,40 @@ const direct = [
     label: 'E-mail',
     value: site.email,
     href: `mailto:${site.email}`,
-    external: false,
     cta: 'contato-email',
   },
 ] as const
 ---
 
-<section id="contato" class="tech-bg py-20 text-white md:py-28">
-  <div class="wrap grid gap-14 lg:grid-cols-2 lg:gap-20">
-    <div>
-      <SectionHeader
-        dark
-        eyebrow="Contato"
-        title="Vamos gerar demanda para a sua empresa?"
-        lead="Conte o que a sua empresa vende e para quem. Um especialista da B2 responde pelo WhatsApp."
-      />
+<section id="contato" class="tech-bg on-dark overflow-hidden pt-20 text-white md:pt-28">
+  <div class="wrap grid gap-14 lg:grid-cols-2 lg:gap-16">
+    <div class="flex flex-col">
+      <p class="eyebrow">{contact.eyebrow}</p>
+      <h2 class="mt-4 text-3xl leading-tight font-bold md:text-[2.4rem]">{contact.title}</h2>
 
-      <ul class="mt-10 space-y-4">
+      <ul class="mt-8 space-y-3.5 text-lg">
         {
-          direct.map((item) => (
+          contact.benefits.map((item) => (
+            <li class="flex gap-3">
+              <Icon name="check" class="mt-1 size-5 shrink-0 text-neon" strokeWidth={2.5} />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+
+      <ul class="mt-10 grid gap-4">
+        {
+          channels.map((item) => (
             <li>
               <a
                 href={item.href}
-                target={item.external ? '_blank' : undefined}
-                rel={item.external ? 'noopener' : undefined}
-                class="group flex items-center gap-4"
+                target={item.icon === 'message' ? '_blank' : undefined}
+                rel={item.icon === 'message' ? 'noopener' : undefined}
+                class="group flex items-center gap-3.5"
                 data-cta={item.cta}
               >
-                <span class="flex size-12 shrink-0 items-center justify-center rounded-xl border border-neon/30 bg-navy-900 text-neon">
+                <span class="flex size-11 shrink-0 items-center justify-center rounded-xl border border-neon/30 bg-navy-900 text-neon">
                   <Icon name={item.icon} class="size-5" />
                 </span>
                 <span>
@@ -67,65 +72,133 @@ const direct = [
             </li>
           ))
         }
+        <li class="flex items-center gap-3.5">
+          <span
+            class="flex size-11 shrink-0 items-center justify-center rounded-xl border border-neon/30 bg-navy-900 text-neon"
+          >
+            <Icon name="pin" class="size-5" />
+          </span>
+          <span>
+            <span class="block text-sm text-mist">Endereço</span>
+            <span class="block font-semibold">
+              {site.address.street}, {site.address.city} - {site.address.state}
+            </span>
+          </span>
+        </li>
       </ul>
+
+      <Image
+        src={team}
+        alt="Time técnico da B2 com capacetes de segurança"
+        widths={[640, 1000, 1400]}
+        sizes="(min-width: 1024px) 45vw, 100vw"
+        class="mt-auto hidden w-full pt-12 lg:block"
+      />
     </div>
 
-    <form
-      class="rounded-2xl bg-white p-6 text-ink shadow-[0_30px_80px_-30px_rgb(10_108_255/0.6)] sm:p-9"
-      data-lead-form
-      novalidate
-    >
-      <h3 class="text-2xl font-bold">Peça um diagnóstico</h3>
-      <p class="mt-2 text-ink-soft">Leva menos de um minuto.</p>
+    <div class="pb-20 md:pb-28">
+      <form
+        class="rounded-2xl bg-white p-6 text-ink shadow-[0_30px_80px_-30px_rgb(10_108_255/0.6)] sm:p-9"
+        data-lead-form
+        novalidate
+      >
+        <div data-form-fields>
+          <h3 class="text-2xl font-bold">Agende seu diagnóstico</h3>
+          <p class="mt-2 text-ink-soft">
+            Preencha os dados e continue a conversa com um especialista pelo WhatsApp.
+          </p>
 
-      <div class="mt-7 grid gap-5 sm:grid-cols-2">
-        <label class="block">
-          <span class="mb-1.5 block text-sm font-semibold">Seu nome</span>
-          <input class="field" name="nome" autocomplete="name" required />
-        </label>
-        <label class="block">
-          <span class="mb-1.5 block text-sm font-semibold">Empresa</span>
-          <input class="field" name="empresa" autocomplete="organization" required />
-        </label>
-        <label class="block sm:col-span-2">
-          <span class="mb-1.5 block text-sm font-semibold">O que a empresa vende?</span>
-          <input
-            class="field"
-            name="produto"
-            placeholder="Ex.: compressores, válvulas, manutenção industrial"
-            required
-          />
-        </label>
-        <label class="block sm:col-span-2">
-          <span class="mb-1.5 block text-sm font-semibold">Interesse principal</span>
-          <select class="field" name="interesse">
-            {interests.map((option) => <option>{option}</option>)}
-          </select>
-        </label>
-        <label class="block sm:col-span-2">
-          <span class="mb-1.5 block text-sm font-semibold">
-            Mensagem <span class="font-normal text-ink-soft">(opcional)</span>
+          <div class="mt-7 grid gap-5 sm:grid-cols-2">
+            <label class="block">
+              <span class="mb-1.5 block text-sm font-semibold">Nome</span>
+              <input class="field" name="nome" autocomplete="name" required />
+            </label>
+            <label class="block">
+              <span class="mb-1.5 block text-sm font-semibold">Empresa</span>
+              <input class="field" name="empresa" autocomplete="organization" required />
+            </label>
+            <label class="block">
+              <span class="mb-1.5 block text-sm font-semibold">Cargo</span>
+              <input class="field" name="cargo" autocomplete="organization-title" required />
+            </label>
+            <label class="block">
+              <span class="mb-1.5 block text-sm font-semibold">Perfil da empresa</span>
+              <select class="field" name="perfil" required>
+                <option value="">Selecione…</option>
+                {contact.profiles.map((option) => <option>{option}</option>)}
+              </select>
+            </label>
+            <label class="block sm:col-span-2">
+              <span class="mb-1.5 block text-sm font-semibold">Segmento de mercado</span>
+              <input
+                class="field"
+                name="segmento"
+                placeholder="Ex.: compressores, automação, embalagens"
+                required
+              />
+            </label>
+            <label class="block">
+              <span class="mb-1.5 block text-sm font-semibold">E-mail corporativo</span>
+              <input class="field" name="email" type="email" autocomplete="email" required />
+            </label>
+            <label class="block">
+              <span class="mb-1.5 block text-sm font-semibold">WhatsApp</span>
+              <input
+                class="field"
+                name="whatsapp"
+                type="tel"
+                autocomplete="tel"
+                placeholder="(11) 90000-0000"
+                required
+              />
+            </label>
+            <label class="block sm:col-span-2">
+              <span class="mb-1.5 block text-sm font-semibold">
+                Como podemos ajudar? <span class="font-normal text-ink-soft">(opcional)</span>
+              </span>
+              <textarea class="field min-h-24 resize-y" name="mensagem" rows="3"></textarea>
+            </label>
+            <!-- Campo-armadilha contra robôs: pessoas não o veem. -->
+            <label class="absolute -left-[9999px]" aria-hidden="true">
+              Não preencha este campo
+              <input name="website" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
+          <p class="mt-4 hidden text-sm font-medium text-red-600" role="alert" data-form-error></p>
+
+          <button type="submit" class="btn btn-primary mt-6 w-full" data-cta="form-diagnostico">
+            Agendar diagnóstico
+            <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
+          </button>
+          <p class="mt-4 text-center text-xs leading-relaxed text-ink-soft">
+            Ao enviar, você concorda em ser contatado pela B2. Seus dados seguem só para a conversa
+            no WhatsApp.
+          </p>
+        </div>
+
+        <div class="hidden py-10 text-center" data-form-success>
+          <span
+            class="mx-auto flex size-16 items-center justify-center rounded-full bg-brand/10 text-brand"
+          >
+            <Icon name="check" class="size-8" strokeWidth={2.5} />
           </span>
-          <textarea
-            class="field min-h-28 resize-y"
-            name="mensagem"
-            rows="3"
-            placeholder="Conte um pouco sobre o momento da empresa"></textarea>
-        </label>
-      </div>
-
-      <p class="mt-4 hidden text-sm font-medium text-red-600" role="alert" data-form-error>
-        Preencha nome, empresa e o que a empresa vende.
-      </p>
-
-      <button type="submit" class="btn btn-primary mt-6 w-full" data-cta="form-whatsapp">
-        Enviar pelo WhatsApp
-        <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
-      </button>
-      <p class="mt-4 text-center text-xs leading-relaxed text-ink-soft">
-        Ao enviar, abrimos uma conversa no WhatsApp com a sua mensagem. Nada fica salvo no site.
-      </p>
-    </form>
+          <h3 class="mt-6 text-2xl font-bold">Recebemos seu contato!</h3>
+          <p class="mt-3 text-ink-soft">
+            Abrimos o WhatsApp com a sua mensagem. Se ele não abriu, toque no botão abaixo.
+          </p>
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noopener"
+            class="btn btn-primary mt-6"
+            data-form-whatsapp
+          >
+            Abrir WhatsApp
+          </a>
+        </div>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -135,31 +208,76 @@ const direct = [
   const form = document.querySelector<HTMLFormElement>('[data-lead-form]')
   const error = document.querySelector<HTMLElement>('[data-form-error]')
 
+  const labels: Record<string, string> = {
+    nome: 'nome',
+    empresa: 'empresa',
+    cargo: 'cargo',
+    perfil: 'perfil da empresa',
+    segmento: 'segmento',
+    email: 'e-mail',
+    whatsapp: 'WhatsApp',
+  }
+
+  // Origem do clique (UTMs e gclid), para o comercial saber de onde o lead veio.
+  function origin() {
+    const params = new URLSearchParams(location.search)
+    const parts = ['utm_source', 'utm_medium', 'utm_campaign']
+      .map((key) => params.get(key))
+      .filter(Boolean)
+    if (params.get('gclid')) parts.push('Google Ads')
+    return parts.join(' / ')
+  }
+
   form?.addEventListener('submit', (event) => {
     event.preventDefault()
     const data = new FormData(form)
     const value = (key: string) => String(data.get(key) ?? '').trim()
 
-    if (!value('nome') || !value('empresa') || !value('produto')) {
-      error?.classList.remove('hidden')
-      form.querySelector<HTMLInputElement>('input:invalid')?.focus()
+    if (value('website')) return
+
+    const missing = Object.keys(labels).filter((key) => !value(key))
+    const badEmail = value('email') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value('email'))
+    const badPhone = value('whatsapp') && value('whatsapp').replace(/\D/g, '').length < 10
+
+    if (missing.length || badEmail || badPhone) {
+      const messages = []
+      if (missing.length) messages.push(`Preencha: ${missing.map((k) => labels[k]).join(', ')}.`)
+      if (badEmail) messages.push('E-mail inválido.')
+      if (badPhone) messages.push('WhatsApp inválido: informe DDD e número.')
+      if (error) {
+        error.textContent = messages.join(' ')
+        error.classList.remove('hidden')
+      }
+      const first = missing[0] ?? (badEmail ? 'email' : 'whatsapp')
+      form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus()
       return
     }
     error?.classList.add('hidden')
 
     const lines = [
-      'Olá! Vim pelo site da B2 e quero um diagnóstico.',
+      'Olá! Vim pelo site da B2 e quero agendar um diagnóstico.',
       '',
       `Nome: ${value('nome')}`,
       `Empresa: ${value('empresa')}`,
-      `O que vendemos: ${value('produto')}`,
-      `Interesse: ${value('interesse')}`,
+      `Cargo: ${value('cargo')}`,
+      `Perfil: ${value('perfil')}`,
+      `Segmento: ${value('segmento')}`,
+      `E-mail: ${value('email')}`,
+      `WhatsApp: ${value('whatsapp')}`,
     ]
-    if (value('mensagem')) lines.push(`Mensagem: ${value('mensagem')}`)
+    if (value('mensagem')) lines.push(`Como podemos ajudar: ${value('mensagem')}`)
+    if (origin()) lines.push(`Origem: ${origin()}`)
+    const link = whatsappLink(lines.join('\n'))
 
+    // Mesmo evento do formulário do site antigo: é o gatilho de conversão no GTM.
     const w = window as typeof window & { dataLayer?: object[] }
-    w.dataLayer?.push({ event: 'lead_whatsapp', interesse: value('interesse') })
+    w.dataLayer = w.dataLayer || []
+    w.dataLayer.push({ event: 'Elementor Form Success', perfil: value('perfil') })
 
-    window.open(whatsappLink(lines.join('\n')), '_blank', 'noopener')
+    form.querySelector('[data-form-fields]')?.classList.add('hidden')
+    form.querySelector('[data-form-success]')?.classList.remove('hidden')
+    form.querySelector<HTMLAnchorElement>('[data-form-whatsapp]')?.setAttribute('href', link)
+
+    window.open(link, '_blank', 'noopener')
   })
 </script>

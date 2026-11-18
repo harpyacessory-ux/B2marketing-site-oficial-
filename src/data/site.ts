@@ -1,15 +1,25 @@
 // Dados da empresa usados no site inteiro (cabeçalho, contato, rodapé e SEO).
 export const site = {
   name: 'B2 Marketing Industrial',
-  url: 'https://b2marketingindustrial.com.br',
-  title: 'Agência de Marketing Industrial e B2B | B2 Marketing Industrial',
+  legalName: 'B2 Growth Marketing Ltda',
+  cnpj: '45.855.633/0001-10',
+  tagline: 'O motor que transforma marketing em negócios',
+  url: 'https://www.b2marketingindustrial.com.br',
+  title: 'Agência de Marketing Industrial B2B | B2 Marketing Industrial',
   description:
-    'Agência de marketing industrial e B2B. Google Ads, LinkedIn, landing pages, marketplaces e conteúdo técnico para indústrias, distribuidores e empresas que vendem para outras empresas.',
-  whatsapp: { display: '(12) 99622-2287', number: '5512996222287' },
+    'Agência de marketing digital especializada no mercado industrial. Estratégia, tecnologia e dados para gerar leads qualificados, reuniões e oportunidades B2B.',
+  whatsapp: { display: '(11) 91096-3153', number: '5511910963153' },
   phone: { display: '(13) 3469-7115', tel: '+551334697115' },
-  email: 'marketplace@b2marketingindustrial.com.br',
+  email: 'contato@b2marketingindustrial.com.br',
+  address: {
+    street: 'Rua Benjamin Constant, 61 - Ed. Helbor',
+    city: 'São Vicente',
+    state: 'SP',
+  },
   instagram: 'https://www.instagram.com/b2marketingindustrial/',
-  linkedin: 'https://www.linkedin.com/company/b2marketingindustrial/',
+  linkedin: 'https://www.linkedin.com/company/b2-marketing-industrial/',
+  // Mesmo contêiner do site antigo, para não perder o histórico de conversões.
+  gtm: 'GTM-K4P542CR',
 }
 
 export const whatsappMessage =
@@ -19,9 +29,12 @@ export function whatsappLink(text = whatsappMessage) {
   return `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(text)}`
 }
 
+// As âncoras repetem as do site antigo (#servicos, #metodo-b2, #faq, #contato),
+// então links de anúncios e e-mails já publicados continuam funcionando.
 export const nav = [
-  { label: 'Serviços', href: '#servicos' },
-  { label: 'Como trabalhamos', href: '#metodo' },
-  { label: 'Para quem', href: '#para-quem' },
-  { label: 'Dúvidas', href: '#duvidas' },
+  { label: 'Soluções', href: '#servicos' },
+  { label: 'Método B2', href: '#metodo-b2' },
+  { label: 'Segmentos', href: '#segmentos' },
+  { label: 'Clientes', href: '#clientes' },
+  { label: 'FAQ', href: '#faq' },
 ]

@@ -1,15 +1,35 @@
 ---
 import Icon from './Icon.astro'
-import SectionHeader from './SectionHeader.astro'
 import { faq } from '../data/content'
+import { whatsappLink } from '../data/site'
 ---
 
-<section id="duvidas" class="bg-surface py-20 md:py-28">
+<section id="faq" class="bg-surface py-20 md:py-28">
   <div class="wrap grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-    <SectionHeader
-      eyebrow="Dúvidas frequentes"
-      title="O que as empresas perguntam antes de começar"
-    />
+    <div>
+      <p class="eyebrow">Dúvidas frequentes</p>
+      <h2 class="mt-4 text-3xl leading-tight font-bold md:text-[2.6rem]">
+        Principais dúvidas sobre marketing industrial
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-ink-soft">
+        Respondemos às principais perguntas para você tomar a melhor decisão.
+      </p>
+
+      <div class="mt-10 rounded-2xl border border-line bg-white p-6">
+        <p class="text-lg font-bold">Ficou com alguma dúvida?</p>
+        <p class="mt-1.5 text-ink-soft">Envie sua pergunta para nossos especialistas.</p>
+        <a
+          href={whatsappLink('Olá! Tenho uma dúvida sobre os serviços da B2:')}
+          target="_blank"
+          rel="noopener"
+          class="btn btn-outline mt-5"
+          data-cta="faq-pergunta"
+        >
+          <Icon name="message" class="size-4.5" strokeWidth={2} />
+          Enviar pergunta
+        </a>
+      </div>
+    </div>
 
     <div class="divide-y divide-line border-y border-line">
       {

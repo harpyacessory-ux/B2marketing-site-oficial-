@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro'
+import { finalCta } from '../data/content'
+import { whatsappLink } from '../data/site'
+---
+
+<section class="bg-brand py-16 text-white md:py-20">
+  <div class="wrap flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+    <h2 class="max-w-3xl text-3xl leading-tight font-bold md:text-4xl">{finalCta}</h2>
+    <div class="flex shrink-0 flex-col gap-3 sm:flex-row">
+      <a
+        href="#contato"
+        class="btn bg-white text-brand hover:bg-white/90"
+        data-cta="faixa-diagnostico"
+      >
+        Agendar diagnóstico
+        <Icon name="arrow" class="size-4.5" strokeWidth={2.25} />
+      </a>
+      <a
+        href={whatsappLink()}
+        target="_blank"
+        rel="noopener"
+        class="btn border border-white/50 text-white hover:bg-white/10"
+        data-cta="faixa-whatsapp"
+      >
+        Falar com um especialista
+      </a>
+    </div>
+  </div>
+</section>

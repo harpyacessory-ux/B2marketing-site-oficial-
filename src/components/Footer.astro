@@ -1,29 +1,31 @@
 ---
+import { Image } from 'astro:assets'
 import Icon from './Icon.astro'
+import logo from '../assets/logo-b2.png'
+import { services } from '../data/content'
 import { nav, site, whatsappLink } from '../data/site'
 
 const year = new Date().getFullYear()
 ---
 
-<footer class="border-t border-white/8 bg-navy-950 text-mist">
-  <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+<footer class="bg-navy-950 text-mist">
+  <div class="wrap grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
     <div>
       <div class="flex items-center gap-3">
-        <img src="/logo-b2.png" alt="" width="48" height="47" class="size-12 rounded-lg" />
-        <p class="leading-tight text-white">
-          <span class="block text-lg font-bold">{site.name}</span>
-        </p>
+        <Image src={logo} alt="" width={52} height={52} densities={[1, 2]} class="size-13" />
+        <p class="text-lg leading-tight font-bold text-white">{site.name}</p>
       </div>
-      <p class="mt-5 max-w-sm leading-relaxed">
-        Marketing para indústrias, distribuidores e empresas B2B que precisam gerar oportunidades
-        comerciais.
+      <p class="mt-5 max-w-xs leading-relaxed">{site.tagline}.</p>
+      <p class="mt-5 flex gap-2 text-sm leading-relaxed">
+        <Icon name="pin" class="mt-0.5 size-4.5 shrink-0 text-neon" />
+        <span>{site.address.street}<br />{site.address.city} - {site.address.state}</span>
       </p>
       <div class="mt-6 flex gap-3">
         <a
           href={site.instagram}
           target="_blank"
           rel="noopener"
-          aria-label="Instagram da B2"
+          aria-label="Instagram da B2 Marketing Industrial"
           class="flex size-10 items-center justify-center rounded-lg border border-white/12 text-white/80 hover:border-neon hover:text-neon"
         >
           <Icon name="instagram" class="size-5" />
@@ -32,7 +34,7 @@ const year = new Date().getFullYear()
           href={site.linkedin}
           target="_blank"
           rel="noopener"
-          aria-label="LinkedIn da B2"
+          aria-label="LinkedIn da B2 Marketing Industrial"
           class="flex size-10 items-center justify-center rounded-lg border border-white/12 text-white/80 hover:border-neon hover:text-neon"
         >
           <Icon name="linkedin" class="size-5" />
@@ -43,6 +45,7 @@ const year = new Date().getFullYear()
     <nav aria-label="Rodapé">
       <p class="text-sm font-semibold tracking-[0.14em] text-white uppercase">Navegação</p>
       <ul class="mt-4 space-y-2.5">
+        <li><a href="#inicio" class="hover:text-white">Início</a></li>
         {
           nav.map((item) => (
             <li>
@@ -57,6 +60,21 @@ const year = new Date().getFullYear()
     </nav>
 
     <div>
+      <p class="text-sm font-semibold tracking-[0.14em] text-white uppercase">Soluções</p>
+      <ul class="mt-4 space-y-2.5">
+        {
+          services.map((service) => (
+            <li>
+              <a href="#servicos" class="hover:text-white">
+                {service.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
       <p class="text-sm font-semibold tracking-[0.14em] text-white uppercase">Contato</p>
       <ul class="mt-4 space-y-2.5">
         <li>
@@ -64,7 +82,9 @@ const year = new Date().getFullYear()
             >WhatsApp {site.whatsapp.display}</a
           >
         </li>
-        <li><a href={`tel:${site.phone.tel}`} class="hover:text-white">{site.phone.display}</a></li>
+        <li>
+          <a href={`tel:${site.phone.tel}`} class="hover:text-white">Fixo {site.phone.display}</a>
+        </li>
         <li>
           <a
             href={`mailto:${site.email}`}
@@ -73,10 +93,15 @@ const year = new Date().getFullYear()
           />
         </li>
       </ul>
+      <a href="#contato" class="btn btn-primary mt-6 min-h-11 px-5 py-2.5 text-sm">
+        Agendar diagnóstico
+      </a>
     </div>
   </div>
 
   <div class="border-t border-white/8">
-    <p class="wrap py-6 text-sm">© {year} {site.name}. Todos os direitos reservados.</p>
+    <p class="wrap py-6 text-sm">
+      {`© ${year} ${site.legalName} · CNPJ ${site.cnpj} · Todos os direitos reservados.`}
+    </p>
   </div>
 </footer>

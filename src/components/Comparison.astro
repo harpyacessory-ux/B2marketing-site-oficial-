@@ -1,0 +1,63 @@
+---
+import SectionHeader from './SectionHeader.astro'
+import { comparison } from '../data/content'
+
+const [industrial, b2c] = comparison.columns
+---
+
+<section class="py-20 md:py-28">
+  <div class="wrap">
+    <SectionHeader eyebrow="Comparativo" title={comparison.title} lead={comparison.lead} />
+
+    <!-- Tabela no desktop -->
+    <div class="mt-12 hidden overflow-hidden rounded-2xl border border-line md:block">
+      <table class="w-full text-left">
+        <thead>
+          <tr class="bg-navy-950 text-white">
+            <th scope="col" class="w-1/5 p-5 text-sm font-semibold tracking-wider text-mist uppercase">
+              Característica
+            </th>
+            <th scope="col" class="w-2/5 p-5 text-lg font-bold text-neon">{industrial}</th>
+            <th scope="col" class="w-2/5 p-5 text-lg font-bold">{b2c}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          {
+            comparison.rows.map((row) => (
+              <tr class="even:bg-surface">
+                <th scope="row" class="p-5 font-bold">
+                  {row.label}
+                </th>
+                <td class="p-5 leading-relaxed font-medium">{row.industrial}</td>
+                <td class="p-5 leading-relaxed text-ink-soft">{row.b2c}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cartões no celular -->
+    <dl class="mt-10 space-y-4 md:hidden">
+      {
+        comparison.rows.map((row) => (
+          <div class="rounded-2xl border border-line p-5">
+            <dt class="font-bold">{row.label}</dt>
+            <dd class="mt-3 grid gap-3 text-[0.95rem]">
+              <p>
+                <span class="block text-xs font-bold tracking-wider text-brand uppercase">
+                  {industrial}
+                </span>
+                {row.industrial}
+              </p>
+              <p class="text-ink-soft">
+                <span class="block text-xs font-bold tracking-wider uppercase">{b2c}</span>
+                {row.b2c}
+              </p>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

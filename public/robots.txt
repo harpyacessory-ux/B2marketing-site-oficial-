@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://b2marketingindustrial.com.br/sitemap.xml
+Sitemap: https://www.b2marketingindustrial.com.br/sitemap.xml
