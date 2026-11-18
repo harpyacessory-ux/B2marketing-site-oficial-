@@ -48,8 +48,10 @@ const structuredData = [
   },
 ]
 
-// O GTM só entra no build de produção, para o `npm run dev` não sujar os dados.
+// O GTM só entra no build de produção e só carrega no domínio oficial: testes no
+// `npm run dev` ou no endereço .vercel.app não contam como visita nem conversão.
 const gtm = import.meta.env.PROD ? site.gtm : ''
+const domain = new URL(site.url).hostname.replace(/^www\./, '')
 ---
 
 <!doctype html>
@@ -59,8 +61,8 @@ const gtm = import.meta.env.PROD ? site.gtm : ''
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {
       gtm && (
-        <script is:inline define:vars={{ gtm }}>
-          ;(function (w, d, s, l, i) {
+        <script is:inline define:vars={{ gtm, domain }}>
+          if (location.hostname.endsWith(domain)) (function (w, d, s, l, i) {
             w[l] = w[l] || []
             w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
             var f = d.getElementsByTagName(s)[0],
